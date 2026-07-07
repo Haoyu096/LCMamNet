@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Training / experiment outputs
+runs/
+*.log
+events.out.tfevents.*
+
+# Datasets: ship only the sample images/masks + split lists; ignore any full dumps.
+# (The committed datasets/ contains 2 sample image+mask per dataset and the full split txt.)
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+*.Zone.Identifier
+
+# Keep released weights (weights/*.pt) tracked intentionally.

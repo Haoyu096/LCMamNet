@@ -1,0 +1,28 @@
+# NOTE: installing via `pip install -r requirements.txt` is NOT recommended.
+# causal-conv1d and mamba-ssm ship CUDA extensions and must match your exact
+# Python / PyTorch / CUDA / C++ ABI. Follow the step-by-step instructions in
+# README.md ("Environment") instead — it installs the correct prebuilt wheels.
+# This file is provided only as a reference snapshot of the verified environment
+# (Python 3.12, CUDA 11.8).
+
+# --- PyTorch (CUDA 11.8 build) ---
+# Requires the CUDA 11.8 wheel index:
+#   pip install torch==2.4.0+cu118 torchvision==0.19.0+cu118 --index-url https://download.pytorch.org/whl/cu118
+torch==2.4.0+cu118
+torchvision==0.19.0+cu118
+
+# --- Mamba selective-scan kernels (install the official prebuilt wheels) ---
+# causal-conv1d 1.5.4  (cp312 / torch2.4 / cu11 / cxx11abiFALSE):
+#   https://github.com/Dao-AILab/causal-conv1d/releases/download/v1.5.4/causal_conv1d-1.5.4+cu11torch2.4cxx11abiFALSE-cp312-cp312-linux_x86_64.whl
+# mamba-ssm 2.3.0      (cp312 / torch2.4 / cu11 / cxx11abiFALSE):
+#   https://github.com/state-spaces/mamba/releases/download/v2.3.0/mamba_ssm-2.3.0+cu11torch2.4cxx11abiFALSE-cp312-cp312-linux_x86_64.whl
+causal-conv1d==1.5.4
+mamba-ssm==2.3.0
+
+# --- Data / metrics / IO ---
+scikit-image==0.26.0
+numpy==2.5.1
+Pillow==12.3.0
+tqdm==4.68.4
+PyYAML==6.0.3
+einops==0.8.2
