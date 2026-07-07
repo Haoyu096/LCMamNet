@@ -84,16 +84,21 @@ def seed_pytorch(seed=42):
     print(f"Random Seed set to {seed}")
 
 
+def finalize_config(cfg):
+    dataset = cfg["dataset"]
+    if dataset not in DATASET_CFG:
+        raise ValueError(f"Unknown dataset={dataset}. Choose from {list(DATASET_CFG)}.")
+    cfg["norm_mode"] = DATASET_CFG[dataset]["norm_mode"]
+    return cfg
+
+
 def main(args):
     seed_pytorch(args.seed)
 
     device = resolve_device(args.device)
     torch.cuda.set_device(device)
 
-    if args.dataset not in DATASET_CFG:
-        raise ValueError(f"Unknown dataset={args.dataset}. Choose from {list(DATASET_CFG)}.")
     cfg = DATASET_CFG[args.dataset]
-    args.norm_mode = cfg["norm_mode"]
     mean, std = cfg["mean"], cfg["std"]
 
     dataset_dir = args.root + "/" + args.dataset
@@ -186,4 +191,4 @@ def main(args):
 
 
 if __name__ == "__main__":
-    main(parse_script_args(DEFAULTS))
+    main(parse_script_args(DEFAULTS, finalize=finalize_config))

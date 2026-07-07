@@ -86,14 +86,20 @@ def select_eval_output(preds):
     return preds
 
 
+def finalize_config(cfg):
+    effective = DATASET_ALIASES.get(cfg["dataset"].upper(), cfg["dataset"])
+    if cfg["norm_mode"] == "auto":
+        cfg["norm_mode"] = DATASET_NORM.get(effective, cfg["norm_mode"])
+    return cfg
+
+
 def main(args):
     device = resolve_device(args.device)
 
     effective_dataset, val_img_ids, split_file = resolve_dataset_and_ids(
         args.root, args.dataset, args.split_method
     )
-    norm_mode = DATASET_NORM.get(effective_dataset, args.norm_mode) if args.norm_mode == "auto" else args.norm_mode
-    args.norm_mode = norm_mode
+    norm_mode = args.norm_mode
     dataset_dir = str(Path(args.root) / effective_dataset)
     transform = build_transform(norm_mode)
     testset = TestSetLoader(
@@ -183,4 +189,4 @@ def main(args):
 
 
 if __name__ == "__main__":
-    main(parse_script_args(DEFAULTS))
+    main(parse_script_args(DEFAULTS, finalize=finalize_config))
