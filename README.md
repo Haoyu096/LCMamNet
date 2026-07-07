@@ -1,6 +1,6 @@
-# LCMamNet
+# LCMamNet: A Lightweight Cross-scale Mamba Network for Infrared Small Target Detection
 
-Official implementation of **LCMamNet: A Lightweight Cross-scale Mamba Network for Infrared Small Target Detection**.
+**[Checkpoints](#checkpoints)** · [Environment](#environment) · [Training](#training) · [Test](#test)
 
 LCMamNet is a lightweight segmentation-based framework for infrared small target detection (IRSTD). It combines a compact direction-aware encoder, latent dense cross-scale fusion with bidirectional Mamba modeling, and selective shallow-detail restoration for efficient and accurate small-target segmentation.
 
@@ -97,15 +97,16 @@ reference; download the complete datasets to reproduce the reported results. See
 
 ## Checkpoints
 
-Pretrained checkpoints (model `state_dict` only, no optimizer/args) are provided under
-`weights/`:
+Pretrained checkpoints are included in this
+repository under `weights/`, so cloning the repo or downloading the source ZIP already
+gives you all three. The links below are only for downloading an individual checkpoint on
+its own:
 
-```text
-weights/
-├── LCMamNet_irstd1k.pt    # IRSTD-1k
-├── LCMamNet_nuaa.pt       # NUAA-SIRST
-└── LCMamNet_nudt.pt       # NUDT-SIRST
-```
+| Dataset | Checkpoint | mIoU (%) |
+| --- | --- | ---: |
+| IRSTD-1k | [LCMamNet_irstd1k.pt](https://github.com/Haoyu096/LCMamNet/raw/main/weights/LCMamNet_irstd1k.pt) | 71.25 |
+| NUAA-SIRST | [LCMamNet_nuaa.pt](https://github.com/Haoyu096/LCMamNet/raw/main/weights/LCMamNet_nuaa.pt) | 79.60 |
+| NUDT-SIRST | [LCMamNet_nudt.pt](https://github.com/Haoyu096/LCMamNet/raw/main/weights/LCMamNet_nudt.pt) | 95.58 |
 
 Load a checkpoint manually:
 
@@ -133,8 +134,7 @@ python train.py --dataset NUDT-SIRST
 python train.py --dataset IRSTD-1k --epochs 800 --lr 1e-3 --train_batch_size 12
 ```
 
-Checkpoints are written to `runs/train/<name>/weights/` as `best.pt` and `last.pt`
-(model `state_dict` only), with the run config saved alongside as `args.yaml`.
+Checkpoints are written to `runs/train/<name>/weights/` as `best.pt` and `last.pt` , with the run config saved alongside as `args.yaml`.
 
 ## Test
 
