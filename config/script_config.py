@@ -31,7 +31,7 @@ def _deserialize_value(raw, default):
         return raw
 
 
-def parse_script_args(defaults, descriptions=None):
+def parse_script_args(defaults, descriptions=None, finalize=None):
     descriptions = descriptions or {}
     parser = argparse.ArgumentParser()
     parser.add_argument("--show_config", action="store_true")
@@ -49,6 +49,10 @@ def parse_script_args(defaults, descriptions=None):
     for key, value in defaults.items():
         override = getattr(parsed, key)
         merged[key] = value if override is None else _deserialize_value(override, value)
+
+    # 让派生字段(如按 dataset 决定 norm_mode)在打印前定稿, 保证 --show_config 显示真实生效值。
+    if finalize is not None:
+        merged = finalize(merged)
 
     if parsed.show_config:
         print("Current script config:")
